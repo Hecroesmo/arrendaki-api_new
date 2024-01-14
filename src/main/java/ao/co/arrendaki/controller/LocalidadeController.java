@@ -13,33 +13,45 @@ import java.util.List;
 @RestController
 @RequestMapping("/localidade")
 @CrossOrigin(origins = "*", allowedHeaders = "*",
-        methods = {RequestMethod.GET,
-                RequestMethod.DELETE,
-                RequestMethod.PATCH,
-                RequestMethod.POST,
-                RequestMethod.PUT})
+		methods = {RequestMethod.GET,
+				RequestMethod.DELETE,
+				RequestMethod.PATCH,
+				RequestMethod.POST,
+				RequestMethod.PUT})
 public class LocalidadeController {
 
-    @Autowired
-    private LocalidadeService service;
+	@Autowired
+	private LocalidadeService service;
 
-    @PostMapping
-    public ResponseEntity<?> salvar(@RequestBody LocalidadeRequest localidade) {
-        return new ResponseEntity<>(service.salvar(localidade), HttpStatus.CREATED);
-    }
+	@PostMapping
+	public ResponseEntity<?> salvar(@RequestBody LocalidadeRequest localidade) {
+		return new ResponseEntity<>(service.salvar(localidade), HttpStatus.CREATED);
+	}
 
-    @GetMapping
-    public ResponseEntity<List<?>> buscarPaises() {
-        return new ResponseEntity<>(service.buscarLocalidades(), HttpStatus.OK);
-    }
+	@GetMapping
+	public ResponseEntity<List<?>> buscarLocalidades() {
+		return new ResponseEntity<>(service.buscarLocalidades(), HttpStatus.OK);
+	}
 
-    @GetMapping("/{chave}")
-    public ResponseEntity<Localidade> buscarLocalidadesPelaChave(@PathVariable Long chave) {
-        return new ResponseEntity<>(service.buscarPelaChave(chave), HttpStatus.OK);
-    }
+	@GetMapping("/paises")
+	public ResponseEntity<List<?>> buscarTodosPaises() {
+		return new ResponseEntity<>(service.buscarTodosPaises(), HttpStatus.OK);
+	}
 
-    @DeleteMapping("/{chave}")
-    public void eliminar(@PathVariable Long chave) {
-        service.deletarPelaChave(chave);
-    }
+	@GetMapping("/filhos/{chave}")
+	public ResponseEntity<List<?>> buscarTodasLocalidadePeloChavePai(@PathVariable Long chave) {
+		return new ResponseEntity<>(
+				service.buscarTodasLocalidadePeloChavePai(chave), HttpStatus.OK
+		);
+	}
+
+	@GetMapping("/{chave}")
+	public ResponseEntity<Localidade> buscarPelaChave(@PathVariable Long chave) {
+		return new ResponseEntity<>(service.buscarPelaChave(chave), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{chave}")
+	public void deletarPelaChave(@PathVariable Long chave) {
+		service.deletarPelaChave(chave);
+	}
 }
