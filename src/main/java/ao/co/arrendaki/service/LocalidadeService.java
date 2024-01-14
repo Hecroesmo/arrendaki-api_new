@@ -2,6 +2,8 @@ package ao.co.arrendaki.service;
 
 import ao.co.arrendaki.model.Localidade;
 import ao.co.arrendaki.repository.LocalidadeRepository;
+import ao.co.arrendaki.requestModel.LocalidadeRequest;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,15 +16,15 @@ public class LocalidadeService {
     @Autowired
     private LocalidadeRepository repositorio;
 
-    public Localidade salvar(Localidade localidade) {
-//        Localidade localidade = new Localidade();
-//        localidade.setDesignacao(localidadeReq.getDesignacao());
-//
-//        if (localidadeReq.getLocalidadePai() > 0) {
-//            Localidade localidadePai = new Localidade();
-//            localidadePai.setPkLocalidade(localidadeReq.getLocalidadePai());
-//            localidade.setLocalidadePai(localidadePai);
-//        }
+    public Localidade salvar(LocalidadeRequest localidadeReq) {
+        Localidade localidade = new Localidade();
+        localidade.setDesignacao(localidadeReq.getDesignacao());
+
+        if (localidadeReq.getLocalidadePai() != null) {
+            Localidade localidadePai = repositorio.findById(localidadeReq.getLocalidadePai())
+                    .orElseThrow(() -> new EntityNotFoundException("LocalidadePai com id " + localidadeReq.getLocalidadePai() + " nao      contrado"));
+            localidade.setLocalidadePai(localidadePai);
+        }
 
         return repositorio.save(localidade);
     }
