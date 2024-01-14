@@ -1,17 +1,19 @@
 package ao.co.arrendaki.model;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
+import java.io.Serial;
+import java.io.Serializable;
 
 @Entity
 @Getter
 @Setter
-public class Localidade {
+public class Localidade implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,12 +25,12 @@ public class Localidade {
     @JoinColumn(name = "fk_localidade_pai")
     private Localidade localidadePai;
 
-    @JsonIgnore
-    @OneToMany(mappedBy = "localidade")
-
-    private List<Pessoa> pessoas;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "localidade")
-    private List<Residencia> residencias;
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "localidade")
+//
+//    private List<Pessoa> pessoas;
+//
+//    @JsonIgnore
+//    @OneToMany(mappedBy = "localidade")
+//    private List<Residencia> residencias;
 }

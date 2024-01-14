@@ -1,7 +1,6 @@
 package ao.co.arrendaki.controller;
 
 import ao.co.arrendaki.model.Localidade;
-import ao.co.arrendaki.requestModel.LocalidadeRequest;
 import ao.co.arrendaki.service.LocalidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/localidade")
-@CrossOrigin(origins = "*",allowedHeaders = "*",
+@CrossOrigin(origins = "*", allowedHeaders = "*",
         methods = {RequestMethod.GET,
                 RequestMethod.DELETE,
                 RequestMethod.PATCH,
@@ -24,22 +23,22 @@ public class LocalidadeController {
     private LocalidadeService service;
 
     @PostMapping
-    public ResponseEntity<?> salvar(@RequestBody LocalidadeRequest localidade){
+    public ResponseEntity<?> salvar(@RequestBody Localidade localidade) {
         return new ResponseEntity<>(service.salvar(localidade), HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<List<?>> buscarPaises(){
-        return new ResponseEntity<>(service.buscarTodosPaises(),HttpStatus.OK);
+    public ResponseEntity<List<?>> buscarPaises() {
+        return new ResponseEntity<>(service.buscarLocalidades(), HttpStatus.OK);
     }
 
     @GetMapping("/{chave}")
-    public ResponseEntity<List<?>> buscarLocalidadesPelaChave(@PathVariable Long chave){
-        return new ResponseEntity<>(service.buscarTodasLocalidadePeloChavePai(chave),HttpStatus.OK);
+    public ResponseEntity<Localidade> buscarLocalidadesPelaChave(@PathVariable Long chave) {
+        return new ResponseEntity<>(service.buscarPelaChave(chave), HttpStatus.OK);
     }
 
     @DeleteMapping("/{chave}")
-    public ResponseEntity<?> eliminar(@PathVariable Long chave){
-        return new ResponseEntity<>(service.deletarPelaChave(chave),HttpStatus.OK);
+    public ResponseEntity<?> eliminar(@PathVariable Long chave) {
+        return new ResponseEntity<>(service.deletarPelaChave(chave), HttpStatus.OK);
     }
 }
