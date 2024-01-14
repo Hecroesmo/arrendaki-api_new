@@ -1,14 +1,15 @@
 package ao.co.arrendaki.requestModel;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 @Data
+@Builder
 @AllArgsConstructor
 public class LocalidadeRequest implements Serializable {
     private final String designacao;
-    private final long localidadePai;
+    private final Long localidadePai;
 }

@@ -1,6 +1,7 @@
 package ao.co.arrendaki.controller;
 
 import ao.co.arrendaki.model.Localidade;
+import ao.co.arrendaki.requestModel.LocalidadeRequest;
 import ao.co.arrendaki.service.LocalidadeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +24,8 @@ public class LocalidadeController {
     private LocalidadeService service;
 
     @PostMapping
-    public ResponseEntity<?> salvar(@RequestBody Localidade localidade) {
-        return new ResponseEntity<>(service.salvar(localidade), HttpStatus.OK);
+    public ResponseEntity<?> salvar(@RequestBody LocalidadeRequest localidade) {
+        return new ResponseEntity<>(service.salvar(localidade), HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -38,7 +39,7 @@ public class LocalidadeController {
     }
 
     @DeleteMapping("/{chave}")
-    public ResponseEntity<?> eliminar(@PathVariable Long chave) {
-        return new ResponseEntity<>(service.deletarPelaChave(chave), HttpStatus.OK);
+    public void eliminar(@PathVariable Long chave) {
+        service.deletarPelaChave(chave);
     }
 }
